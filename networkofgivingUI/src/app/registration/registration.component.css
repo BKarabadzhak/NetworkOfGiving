@@ -1,0 +1,15 @@
+.clr-form-control {
+  margin-bottom: 1rem;
+}
+
+.modal-footer {
+  justify-content: flex-start;
+}
+
+.login-wrapper .login {
+  min-height: 10vh;
+}
+
+.login-wrapper .login .login-group .btn {
+  margin-bottom: 10px;
+}

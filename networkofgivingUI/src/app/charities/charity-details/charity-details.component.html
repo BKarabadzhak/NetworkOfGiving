@@ -1,0 +1,94 @@
+<clr-alert [(clrAlertClosed)]="alertIsClosed" [clrAlertType]="'success'">
+  <clr-alert-item>
+        <span class="alert-text">
+            {{responseMessage}}
+        </span>
+  </clr-alert-item>
+</clr-alert>
+
+<div *ngIf="charity">
+  <div class="clr-row">
+    <div class="clr-col-2">
+      <button routerLink="/charities">Back</button>
+    </div>
+  </div>
+  <div class="clr-row">
+    <div class="clr-col-10">
+      <p>{{charity.title}}</p>
+    </div>
+  </div>
+  <div class="clr-row">
+    <div class="clr-col-lg-5 clr-col-sm-5 clr-col-md-5">
+      <div class="card">
+        <div class="card-block">
+          <div class="card-text">
+            <div class="card-img">
+              <img [src]="charity.image"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clr-col-4">
+      <p *ngIf="charity.donationCurrent+1 && charity.donationRequired">Current donations / Required
+        donations: {{charity.donationCurrent}}/{{charity.donationRequired}}</p>
+      <p *ngIf="charity.participantsCurrent+1 && charity.participantsRequired">Current participants / Required
+        participants: {{charity.participantsCurrent}}/{{charity.participantsRequired}}</p>
+
+      <p *ngIf="!auth.isAuth">You cannot donate or participate, login first.</p>
+      <div *ngIf="charityOwnCurrentCustomer === true || charityOwnCurrentCustomer === false">
+        <div *ngIf="auth.isAuth && charityOwnCurrentCustomer">
+          <p>This is your charity and you do not have the opportunity to donate or participate in it.</p>
+          <button class="btn btn-warning" (click)="deleteModalIsOpen = true">Delete charity</button>
+        </div>
+        <div *ngIf="auth.isAuth && !charityOwnCurrentCustomer">
+          <button *ngIf="this.charity.donationRequired" class="btn btn-primary" (click)="donateModalIsOpen = true">Donate</button>
+          <button *ngIf="!checkIfVolunteer && this.charity.participantsRequired" class="btn btn-primary"
+                  (click)="volunteerModalIsOpen = true">Volunteer
+          </button>
+          <p *ngIf="checkIfVolunteer">You are already a volunteer of this charity.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clr-row">
+    <div class="clr-col-10">
+      <p>{{charity.description}}</p>
+    </div>
+  </div>
+</div>
+
+
+<clr-modal [(clrModalOpen)]="donateModalIsOpen">
+  <h3 class="modal-title">Donate to charity</h3>
+  <div class="modal-body">
+    <clr-input-container>
+      <label>Amount to donate</label>
+      <input clrInput type="number" name="donation" placeholder="Amount" [(ngModel)]="donationAmount"/>
+    </clr-input-container>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="donateModalIsOpen = false; this.donationAmount = null">
+      Cancel
+    </button>
+    <button type="button" class="btn btn-primary" [disabled]="submitted" (click)="donate()">Ok</button>
+  </div>
+</clr-modal>
+
+
+<clr-modal [(clrModalOpen)]="volunteerModalIsOpen" [clrModalStaticBackdrop]="false">
+  <h3 class="modal-title">Volunteer to charity?</h3>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="volunteerModalIsOpen = false">Cancel</button>
+    <button type="button" class="btn btn-primary" [disabled]="submitted" (click)="volunteer()">Ok</button>
+  </div>
+</clr-modal>
+
+
+<clr-modal [(clrModalOpen)]="deleteModalIsOpen" [clrModalStaticBackdrop]="false">
+  <h3 class="modal-title">Are you sure?</h3>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="deleteModalIsOpen = false">Cancel</button>
+    <button type="button" class="btn btn-primary" [disabled]="submitted" (click)="delete()">Ok</button>
+  </div>
+</clr-modal>

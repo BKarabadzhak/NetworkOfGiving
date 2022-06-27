@@ -1,0 +1,14 @@
+.clr-input{
+  width: 400px;
+}
+
+.clr-textarea {
+  width: 400px;
+  height: 200px;
+  resize: none;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}

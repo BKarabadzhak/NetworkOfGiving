@@ -1,0 +1,152 @@
+<!--<form [formGroup]="form" clrForm clrLayout="vertical" (ngSubmit)="submit()">-->
+<!--  <clr-input-container>-->
+<!--    <label>Username</label>-->
+<!--    <input clrInput type="text" name="username" placeholder="Username" formControlName="username"/>-->
+<!--    <clr-control-error *clrIfError="'required'">Can't be empty</clr-control-error>-->
+<!--    <clr-control-error *clrIfError="'minlength'">-->
+<!--      Must be at least {{form.get('username').errors?.minlength.requiredLength}} characters-->
+<!--    </clr-control-error>-->
+<!--    <clr-control-error *clrIfError="'maxlength'">-->
+<!--      Must be no more {{form.get('username').errors?.maxlength.requiredLength}} characters-->
+<!--    </clr-control-error>-->
+<!--    <clr-control-error *clrIfError="'uniqUsername'">Your username is already taken, try another-->
+<!--    </clr-control-error>-->
+<!--  </clr-input-container>-->
+<!--  <clr-password-container>-->
+<!--    <label>Password</label>-->
+<!--    <input clrPassword type="text" name="password" placeholder="Password" formControlName="password"/>-->
+<!--    <clr-control-error *clrIfError="'required'">Can't be empty</clr-control-error>-->
+<!--    <clr-control-error *clrIfError="'minlength'">-->
+<!--      Must be at least {{form.get('password').errors?.minlength.requiredLength}} characters-->
+<!--    </clr-control-error>-->
+<!--    <clr-control-error *clrIfError="'maxlength'">-->
+<!--      Must be no more {{form.get('password').errors?.maxlength.requiredLength}} characters-->
+<!--    </clr-control-error>-->
+<!--  </clr-password-container>-->
+<!--  <clr-input-container>-->
+<!--    <label>Name</label>-->
+<!--    <input clrInput type="text" name="name" placeholder="Name" formControlName="name"/>-->
+<!--    <clr-control-error *clrIfError="'required'">Can't be empty</clr-control-error>-->
+<!--    <clr-control-error *clrIfError="'minlength'">-->
+<!--      Must be at least {{form.get('name').errors?.minlength.requiredLength}} characters-->
+<!--    </clr-control-error>-->
+<!--    <clr-control-error *clrIfError="'maxlength'">-->
+<!--      Must be no more {{form.get('name').errors?.maxlength.requiredLength}} characters-->
+<!--    </clr-control-error>-->
+<!--  </clr-input-container>-->
+<!--  <clr-input-container>-->
+<!--    <label>Age</label>-->
+<!--    <input clrInput type="number" name="age" placeholder="Username" formControlName="age"/>-->
+<!--    <clr-control-error>Allowed Values: 0 to 100</clr-control-error>-->
+<!--  </clr-input-container>-->
+<!--  <clr-radio-container clrInline>-->
+<!--    <label>Gender</label>-->
+<!--    <clr-radio-wrapper>-->
+<!--      <input type="radio" clrRadio name="gender" value="Male" formControlName="gender"/>-->
+<!--      <label>Male</label>-->
+<!--    </clr-radio-wrapper>-->
+<!--    <clr-radio-wrapper>-->
+<!--      <input type="radio" clrRadio name="gender" value="Female" formControlName="gender"/>-->
+<!--      <label>Female</label>-->
+<!--    </clr-radio-wrapper>-->
+<!--    <clr-radio-wrapper>-->
+<!--      <input type="radio" clrRadio name="gender" value="Other" formControlName="gender"/>-->
+<!--      <label>Other</label>-->
+<!--    </clr-radio-wrapper>-->
+<!--  </clr-radio-container>-->
+<!--  <clr-input-container>-->
+<!--    <label>Location</label>-->
+<!--    <input clrInput type="text" name="location" placeholder="Location" formControlName="location"/>-->
+<!--    <clr-control-error>Maximum 40 characters</clr-control-error>-->
+<!--  </clr-input-container>-->
+<!--  <button class="btn btn-primary" type="submit" [disabled]="form.invalid || form.pending">Submit</button>-->
+<!--  <span> Have account?-->
+<!--      <a href="/login" class="signup">Login</a>-->
+<!--      </span>-->
+<!--</form>-->
+
+
+
+<div class="login-wrapper">
+  <form class="login" clrLayout="vertical" clrForm [formGroup]="form" (ngSubmit)="submit()">
+    <section class="title">
+      Registration
+    </section>
+    <div class="login-group">
+      <clr-input-container>
+        <label>Username</label>
+        <input clrInput type="text" name="username" placeholder="Username" formControlName="username"/>
+        <clr-control-error *clrIfError="'required'">Can't be empty</clr-control-error>
+        <clr-control-error *clrIfError="'minlength'">
+          Must be at least {{form.get('username').errors?.minlength.requiredLength}} characters
+        </clr-control-error>
+        <clr-control-error *clrIfError="'maxlength'">
+          Must be no more {{form.get('username').errors?.maxlength.requiredLength}} characters
+        </clr-control-error>
+        <clr-control-error *clrIfError="'uniqUsername'">Your username is already taken, try another
+        </clr-control-error>
+      </clr-input-container>
+      <clr-password-container>
+        <label>Password</label>
+        <input clrPassword type="text" name="password" placeholder="Password" formControlName="password"/>
+        <clr-control-error *clrIfError="'required'">Can't be empty</clr-control-error>
+        <clr-control-error *clrIfError="'minlength'">
+          Must be at least {{form.get('password').errors?.minlength.requiredLength}} characters
+        </clr-control-error>
+        <clr-control-error *clrIfError="'maxlength'">
+          Must be no more {{form.get('password').errors?.maxlength.requiredLength}} characters
+        </clr-control-error>
+      </clr-password-container>
+      <clr-input-container>
+        <label>Name</label>
+        <input clrInput type="text" name="name" placeholder="Name" formControlName="name"/>
+        <clr-control-error *clrIfError="'required'">Can't be empty</clr-control-error>
+        <clr-control-error *clrIfError="'minlength'">
+          Must be at least {{form.get('name').errors?.minlength.requiredLength}} characters
+        </clr-control-error>
+        <clr-control-error *clrIfError="'maxlength'">
+          Must be no more {{form.get('name').errors?.maxlength.requiredLength}} characters
+        </clr-control-error>
+      </clr-input-container>
+      <clr-input-container>
+        <label>Age</label>
+        <input clrInput type="number" name="age" placeholder="Age" formControlName="age"/>
+        <clr-control-error>Allowed Values: 0 to 100</clr-control-error>
+      </clr-input-container>
+      <clr-adio-container clrInline>
+        <label>Gender</label>
+        <clr-radio-wrapper>
+          <input type="radio" clrRadio name="gender" value="Male" formControlName="gender"/>
+          <label>Male</label>
+        </clr-radio-wrapper>
+        <clr-radio-wrapper>
+          <input type="radio" clrRadio name="gender" value="Female" formControlName="gender"/>
+          <label>Female</label>
+        </clr-radio-wrapper>
+        <clr-radio-wrapper>
+          <input type="radio" clrRadio name="gender" value="Other" formControlName="gender"/>
+          <label>Other</label>
+        </clr-radio-wrapper>
+      </clr-adio-container>
+      <clr-input-container>
+        <label>Location</label>
+        <input clrInput type="text" name="location" placeholder="Location" formControlName="location"/>
+        <clr-control-error>Maximum 40 characters</clr-control-error>
+      </clr-input-container>
+      <button class="btn btn-primary" type="submit" [disabled]="form.invalid || form.pending || submitted">Registration</button>
+      <span> Have account?
+      <a [routerLink]="['/login']" class="signup">Login</a>
+      </span>
+    </div>
+  </form>
+</div>
+
+
+
+
+<clr-modal [(clrModalOpen)]="serverIsDisabled">
+  <h3 class="modal-title">Server is disabled now, try later</h3>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="serverIsDisabled = false">Ok</button>
+  </div>
+</clr-modal>

@@ -1,0 +1,30 @@
+<div class="login-wrapper">
+  <form class="login" [formGroup]="form">
+    <section class="title">
+      Login
+    </section>
+    <div class="login-group">
+      <clr-input-container>
+        <label class="clr-sr-only">Username</label>
+        <input type="text" name="username" clrInput placeholder="Username" formControlName="username" />
+        <clr-control-error *clrIfError="'required'">This is a required field</clr-control-error>
+        <clr-control-error *clrIfError="'minlength'; error as err">Must be at least {{ err.requiredLength }} characters</clr-control-error>
+        <clr-control-error *clrIfError="'maxlength'; error as err">Must be no more {{ err.requiredLength }} characters</clr-control-error>
+      </clr-input-container>
+      <clr-password-container>
+        <label class="clr-sr-only">Password</label>
+        <input type="password" name="password" clrPassword placeholder="Password" formControlName="password"  />
+        <clr-control-error *clrIfError="'required'">This is a required field</clr-control-error>
+        <clr-control-error *clrIfError="'minlength'; error as err">Must be at least {{ err.requiredLength }} characters</clr-control-error>
+        <clr-control-error *clrIfError="'maxlength'; error as err">Must be no more {{ err.requiredLength }} characters</clr-control-error>
+      </clr-password-container>
+      <div *ngIf="isError" [class.error]="isError" [class.active]="isError" >
+        Invalid user name or password
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid || form.pending || submitted" (click)="login()">Login</button>
+      <span> Haven't account?
+      <a [routerLink]="['/registration']" class="signup">Registration</a>
+      </span>
+    </div>
+  </form>
+</div>
