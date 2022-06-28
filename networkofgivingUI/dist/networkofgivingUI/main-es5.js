@@ -1168,7 +1168,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         value: function uniqTitle(control) {
           var body = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpParams"]();
           body = body.set('title', control.value);
-          return this.http.post('http://localhost:8080/api/charities/exist', body).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+          return this.http.post('http://54.174.196.3:8080/api/charities/exist', body).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
             if (response) {
               return {
                 uniqTitle: true
@@ -4092,7 +4092,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         value: function uniqUsername(control) {
           var _this21 = this;
 
-          return this.http.get("http://localhost:8080/api/user/customer/".concat(control.value)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
+          return this.http.get("http://54.174.196.3:8080/api/user/customer/".concat(control.value)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (response) {
             if (response) {
               return {
                 uniqUsername: true
@@ -4617,7 +4617,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _classCallCheck(this, HttpService);
 
         this.http = http;
-        this.url = 'http://localhost:8080/api';
+        this.url = 'http://54.174.196.3:8080/api';
       }
 
       _createClass(HttpService, [{

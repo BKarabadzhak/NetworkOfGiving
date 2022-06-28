@@ -582,7 +582,7 @@ class CharitiesComponent {
     uniqTitle(control) {
         let body = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpParams"]();
         body = body.set('title', control.value);
-        return this.http.post('http://localhost:8080/api/charities/exist', body).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((response) => {
+        return this.http.post('http://54.174.196.3:8080/api/charities/exist', body).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((response) => {
             if (response) {
                 return { uniqTitle: true };
             }
@@ -2040,7 +2040,7 @@ class RegistrationComponent {
         });
     }
     uniqUsername(control) {
-        return this.http.get(`http://localhost:8080/api/user/customer/${control.value}`).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((response) => {
+        return this.http.get(`http://54.174.196.3:8080/api/user/customer/${control.value}`).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((response) => {
             if (response) {
                 return { uniqUsername: true };
             }
@@ -2301,7 +2301,7 @@ __webpack_require__.r(__webpack_exports__);
 class HttpService {
     constructor(http) {
         this.http = http;
-        this.url = 'http://localhost:8080/api';
+        this.url = 'http://54.174.196.3:8080/api';
     }
     registerCustomer(customer) {
         return this.http.post(`${this.url}/auth/register`, customer)
