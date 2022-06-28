@@ -62,7 +62,7 @@ export class CharitiesComponent implements OnInit {
   uniqTitle(control: FormControl): Observable<{ [key: string]: boolean }> {
     let body = new HttpParams();
     body = body.set('title', control.value);
-    return this.http.post<boolean>('http://localhost:8080/api/charities/exist', body).pipe(map((response) => {
+    return this.http.post<boolean>('http://54.174.196.3:8080/api/charities/exist', body).pipe(map((response) => {
       if (response) {
         return {uniqTitle: true};
       } else {

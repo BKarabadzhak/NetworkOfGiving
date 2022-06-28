@@ -41,7 +41,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   uniqUsername(control: FormControl): Observable<{ [key: string]: boolean }> {
-    return this.http.get<boolean>(`http://localhost:8080/api/user/customer/${control.value}`).pipe(map((response) => {
+    return this.http.get<boolean>(`http://54.174.196.3:8080/api/user/customer/${control.value}`).pipe(map((response) => {
       if (response) {
         return {uniqUsername: true};
       } else {

@@ -18,7 +18,7 @@ import {catchError} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class HttpService {
-  url = 'http://localhost:8080/api';
+  url = 'http://54.174.196.3:8080/api';
 
   constructor(private http: HttpClient) {
   }
