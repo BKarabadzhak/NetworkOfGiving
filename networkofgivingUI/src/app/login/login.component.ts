@@ -34,11 +34,10 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(formData)
       .subscribe((response) => {
-          //console.log(response);
           this.isError = false;
           this.router.navigate(['/charities']);
           this.submitted = false;
-          },
+        },
         (error) => {
           this.isError = true;
           this.submitted = false;

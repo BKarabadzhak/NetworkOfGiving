@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Charity, Customer, LoginRequest, LoginResponse} from '../interfaces/interfaces';
+import {LoginRequest, LoginResponse} from '../interfaces/interfaces';
 import {HttpService} from './http.service';
 import {Router} from '@angular/router';
 import {Observable, throwError} from 'rxjs';
-import {catchError, map, tap} from 'rxjs/operators';
-import {error} from '@angular/compiler/src/util';
+import {catchError, tap} from 'rxjs/operators';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Injectable({providedIn: 'root'})
@@ -20,7 +19,11 @@ export class AuthService {
 
   login(formData: LoginRequest): Observable<LoginResponse> {
     return this.service.loginCustomer(formData).pipe(tap((response) => {
-      localStorage.setItem('currentUser', JSON.stringify({ token: response.token, name: response.userResponse.username, id: response.userResponse.id }));
+      localStorage.setItem('currentUser', JSON.stringify({
+        token: response.token,
+        name: response.userResponse.username,
+        id: response.userResponse.id
+      }));
       this.isAuth = true;
       this.currentCustomerUsername = response.userResponse.username;
     }), catchError(this.handleError.bind(this)));

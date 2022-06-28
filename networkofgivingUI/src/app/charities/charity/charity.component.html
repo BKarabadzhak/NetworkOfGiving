@@ -1,20 +1,20 @@
 <div class="card">
-    <div class="card-header">
-      {{charity.title}}
+  <div class="card-header">
+    {{charity.title}}
+  </div>
+  <div class="card-block">
+    <div class="card-img">
+      <img [src]="charity.image" alt="image"/>
     </div>
-    <div class="card-block">
-      <div class="card-img">
-        <img [src]="charity.image" alt="image"/>
-      </div>
-      <div class="card-text">
-        {{charity.description}}
-      </div>
-      <div *ngIf="charity.donationCurrent+1 && charity.donationRequired" class="card-text">
-        Current donations / Required donations: {{charity.donationCurrent}}/{{charity.donationRequired}}
-      </div>
-      <div *ngIf="charity.participantsCurrent+1 && charity.participantsRequired" class="card-text">
-        Current participants / Required participants: {{charity.participantsCurrent}}/{{charity.participantsRequired}}
-      </div>
+    <div class="card-text">
+      {{charity.description}}
+    </div>
+    <div *ngIf="charity.donationCurrent+1 && charity.donationRequired" class="card-text">
+      Current donations / Required donations: {{charity.donationCurrent}}/{{charity.donationRequired}}
+    </div>
+    <div *ngIf="charity.participantsCurrent+1 && charity.participantsRequired" class="card-text">
+      Current participants / Required participants: {{charity.participantsCurrent}}/{{charity.participantsRequired}}
+    </div>
     <div class="card-footer">
       <button class="btn btn-sm btn-link" (click)="goToDetailsPage()">See details</button>
     </div>

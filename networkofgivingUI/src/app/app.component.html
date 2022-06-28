@@ -8,11 +8,13 @@
     <div class="header-actions">
       <a *ngIf="!auth.isAuth" [routerLink]="['/login']" class="nav-link nav-text">Login</a>
       <a *ngIf="!auth.isAuth" [routerLink]="['/registration']" class="nav-link nav-text">Registration</a>
-      <a *ngIf="auth.isAuth" href="javascript://" class="nav-link nav-icon-text">
-        <clr-icon shape="user"></clr-icon>
-        <span class="nav-text">{{auth.currentCustomerUsername}}</span>
-      </a>
-      <button *ngIf="auth.isAuth" class="btn" (click)="auth.logoutConfirm()">Logout</button>
+      <div *ngIf="auth.isAuth">
+        <a [routerLink]="['/profile']" class="nav-link nav-icon-text">
+          <clr-icon shape="user"></clr-icon>
+          <span class="nav-text">{{auth.currentCustomerUsername}}</span>
+        </a>
+        <button class="btn" (click)="auth.logoutConfirm()">Logout</button>
+      </div>
     </div>
   </header>
   <div class="content-container">

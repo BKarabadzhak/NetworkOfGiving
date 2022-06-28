@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpService} from '../services/http.service';
 import {Charity} from '../interfaces/interfaces';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {AuthService} from '../services/auth.service';
 
 @Component({
@@ -60,14 +60,15 @@ export class CharitiesComponent implements OnInit {
   }
 
   uniqTitle(control: FormControl): Observable<{ [key: string]: boolean }> {
-    return this.http.post<boolean>('http://localhost:8080/api/charities/exist', control.value).pipe(map((response) => {
+    let body = new HttpParams();
+    body = body.set('title', control.value);
+    return this.http.post<boolean>('http://localhost:8080/api/charities/exist', body).pipe(map((response) => {
       if (response) {
         return {uniqTitle: true};
       } else {
         return null;
       }
     }), catchError(err => {
-      //console.log('Error with checking', err.message);
       return throwError(err);
     }));
   }
@@ -77,7 +78,7 @@ export class CharitiesComponent implements OnInit {
   }
 
   setFile(file: File): void {
-    if (file.type.match('image/*') || file == null) {
+    if (file?.type.match('image/*') || file == null) {
       this.file = file;
       this.fileIsCorrect = true;
       this.fileIsSet = true;

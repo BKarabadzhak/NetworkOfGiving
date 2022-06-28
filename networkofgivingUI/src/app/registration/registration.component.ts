@@ -49,7 +49,6 @@ export class RegistrationComponent implements OnInit {
       }
     }), catchError(err => {
       this.serverIsDisabled = true;
-      //console.log('Error with checking', err.message);
       return throwError(err);
     }));
   }
@@ -59,19 +58,11 @@ export class RegistrationComponent implements OnInit {
     const formData: Customer = {...this.form.value};
     this.service.registerCustomer(formData)
       .subscribe((response) => {
-          this.router.navigate(['/charities']);
+          this.router.navigate(['/login']);
           this.submitted = false;
         },
         (error) => {
-          console.log(error.message);
           this.submitted = false;
         });
-
-    //Get any value from form
-    //const username = this.form.get('username').value;
-    // Set динамически form input
-    /*this.form.patchValue({
-      username: 'jopa'
-    });*/
   }
 }

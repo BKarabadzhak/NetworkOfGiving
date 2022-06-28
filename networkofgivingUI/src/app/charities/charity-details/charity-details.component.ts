@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {HttpService} from '../../services/http.service';
 import {Charity, Donate} from '../../interfaces/interfaces';
@@ -21,14 +21,27 @@ export class CharityDetailsComponent implements OnInit {
   submitted = false;
   responseMessage: string;
   alertIsClosed = true;
+  amountOfDonate: number;
+  toHomePage: string;
+  toProfilePage: string;
+  backRoute: string;
 
-//ActivatedRoute - object with current route
   constructor(private route: ActivatedRoute, private service: HttpService, public auth: AuthService, private router: Router) {
   }
 
 
   ngOnInit(): void {
     this.getParamsFromUrl();
+
+    this.route.queryParams.subscribe((params: Params) => {
+      this.toHomePage = params.toHomePage;
+      this.toProfilePage = params.toProfilePage;
+      if (this.toHomePage) {
+        this.backRoute = this.toHomePage;
+      } else if (this.toProfilePage) {
+        this.backRoute = this.toProfilePage;
+      }
+    });
   }
 
   checkIfCurrentUserOwnThisCharity() {
@@ -51,18 +64,23 @@ export class CharityDetailsComponent implements OnInit {
         (response) => {
           if (response) {
             this.checkIfVolunteer = true;
-          }
-          else {
+          } else {
             this.checkIfVolunteer = false;
           }
         });
     }
   }
 
+  checkAmountForDonate() {
+    if (this.charity) {
+      this.service.recommendedAmountOfDonate(this.charity.id).subscribe((response) => {
+        this.amountOfDonate = response;
+      });
+    }
+  }
+
   getParamsFromUrl() {
     this.route.params.subscribe((params: Params) => {
-      //params {id: '1'} - id-name of param from routing.module
-      //this.paramId = +params.id;
 
       this.service.getCharity(+params.id)
         .subscribe((charity) => {
@@ -72,6 +90,9 @@ export class CharityDetailsComponent implements OnInit {
             }
             if (this.auth.isAuth && !this.checkIfVolunteer) {
               this.checkIfCurrentUserVolunteerThisCharity();
+            }
+            if (this.auth.isAuth && this.charity.donationRequired) {
+              this.checkAmountForDonate();
             }
           },
           (error) => {
@@ -120,5 +141,13 @@ export class CharityDetailsComponent implements OnInit {
           }
         });
     });
+  }
+
+  backDecision() {
+    if (this.backRoute === 'profilePage') {
+      this.router.navigate(['/profile']);
+    } else {
+      this.router.navigate(['/charities']);
+    }
   }
 }

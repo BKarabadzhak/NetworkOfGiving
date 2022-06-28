@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {
   Charity,
@@ -9,83 +9,34 @@ import {
   LoginRequest,
   LoginResponse,
   MessageResponse,
-  RegisterResponse
+  ProfileInfo,
+  RegisterResponse,
+  Transaction
 } from '../interfaces/interfaces';
-import {catchError, map} from 'rxjs/operators';
+import {catchError} from 'rxjs/operators';
 
 
 @Injectable({providedIn: 'root'})
 export class HttpService {
   url = 'http://localhost:8080/api';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   registerCustomer(customer: Customer): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(`${this.url}/auth/register`, customer)
       .pipe(catchError(error => {
-        console.log(error.message);
         return throwError(error);
-    }));
+      }));
   }
 
   loginCustomer(customer: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.url}/auth/login`, customer)
       .pipe(catchError(error => {
-        //console.log(error.message);
         return throwError(error);
       }));
   }
 
-  loginCustomerExampleWithHEADERS(customer: LoginRequest): Observable<LoginResponse> {
-    const headerss = new HttpHeaders({
-      'MyCustomHeader': Math.random().toString(),
-      'sdfsd': 'sdfs'
-    });
-
-    return this.http.post<LoginResponse>(`${this.url}/auth/login`, customer, {
-      headers: headerss
-    })
-      .pipe(catchError(error => {
-        console.log(error.message);
-        return throwError(error);
-      }));
-  }
-
-  loginCustomerExampleWithQUERYPARAMS(customer: LoginRequest): Observable<LoginResponse> {
-    let paramss = new HttpParams();
-    paramss = paramss.append('username', 'bohdan');
-    paramss = paramss.append('id', '15');
-
-    // Эквивалент http://localhost:8080/api/auth/login?username=bohdan&id=15
-    return this.http.post<LoginResponse>(`${this.url}/auth/login`, customer, {
-      params: paramss
-    })
-      .pipe(catchError(error => {
-        console.log(error.message);
-        return throwError(error);
-      }));
-  }
-
-  loginCustomerExampleWithFULLRESPONSE(customer: LoginRequest): Observable<LoginResponse> {
-    let paramss = new HttpParams();
-    paramss = paramss.append('username', 'bohdan');
-    paramss = paramss.append('id', '15');
-
-    // Эквивалент http://localhost:8080/api/auth/login?username=bohdan&id=15
-    return this.http.post<LoginResponse>(`${this.url}/auth/login`, customer, {
-      params: paramss,
-      observe: 'response'
-    })
-      .pipe(map(response => {
-        //Получаю более развёрнутый ответ
-          console.log(response);
-          return response.body;
-      }),
-        catchError(error => {
-        console.log(error.message);
-        return throwError(error);
-      }));
-  }
 
   getCharities(): Observable<Charity[]> {
     const headers = new HttpHeaders({
@@ -94,8 +45,27 @@ export class HttpService {
     return this.http.get<Charity[]>(`${this.url}/charities`, {headers});
   }
 
+  getAllCharitiesByStatus(status: string): Observable<Charity[]> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.http.get<Charity[]>(`${this.url}/charities/${status}`, {headers});
+  }
+
+  getCurrentCustomerCharitiesByStatus(status: string): Observable<Charity[]> {
+    const info: CustomerInfo = JSON.parse(localStorage.getItem('currentUser'));
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${info.token}`,
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get<Charity[]>(`${this.url}/charities/currentUser/${status}`, httpOptions);
+  }
+
   getCharity(id: number): Observable<Charity> {
-    const url = `${this.url}/charities/${id}`;
+    const url = `${this.url}/charities/get/${id}`;
     return this.http.get<Charity>(url);
   }
 
@@ -175,4 +145,79 @@ export class HttpService {
     return this.http.delete<MessageResponse>(url, httpOptions);
   }
 
+  recommendedAmountOfDonate(charityId: number): Observable<number> {
+    const info: CustomerInfo = JSON.parse(localStorage.getItem('currentUser'));
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${info.token}`
+      })
+    };
+
+    const url = `${this.url}/charities/recommendedAmount/${charityId}`;
+    return this.http.get<number>(url, httpOptions);
+  }
+
+  customerInfo(): Observable<ProfileInfo> {
+    const info: CustomerInfo = JSON.parse(localStorage.getItem('currentUser'));
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${info.token}`
+      })
+    };
+
+    const url = `${this.url}/user/customerInfo`;
+    return this.http.get<ProfileInfo>(url, httpOptions);
+  }
+
+  getCharitiesCurrentCustomerIsVolunteer(): Observable<Charity[]> {
+    const info: CustomerInfo = JSON.parse(localStorage.getItem('currentUser'));
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${info.token}`,
+        'Content-Type': 'application/json'
+      })
+    };
+
+    const url = `${this.url}/user/charitiesTakePartVolunteer`;
+    return this.http.get<Charity[]>(url, httpOptions);
+  }
+
+  getCharitiesCurrentCustomerDonater(): Observable<Charity[]> {
+    const info: CustomerInfo = JSON.parse(localStorage.getItem('currentUser'));
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${info.token}`,
+        'Content-Type': 'application/json'
+      })
+    };
+
+    const url = `${this.url}/user/charitiesDonater`;
+    return this.http.get<Charity[]>(url, httpOptions);
+  }
+
+  getCharitiesCurrentCustomerOwner(): Observable<Charity[]> {
+    const info: CustomerInfo = JSON.parse(localStorage.getItem('currentUser'));
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${info.token}`,
+        'Content-Type': 'application/json'
+      })
+    };
+
+    const url = `${this.url}/user/charities`;
+    return this.http.get<Charity[]>(url, httpOptions);
+  }
+
+  getTransactions(): Observable<Transaction[]> {
+    const info: CustomerInfo = JSON.parse(localStorage.getItem('currentUser'));
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${info.token}`,
+        'Content-Type': 'application/json'
+      })
+    };
+
+    const url = `${this.url}/user/transactions`;
+    return this.http.get<Transaction[]>(url, httpOptions);
+  }
 }

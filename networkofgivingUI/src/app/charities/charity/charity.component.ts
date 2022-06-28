@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Charity} from '../../interfaces/interfaces';
 import {Router} from '@angular/router';
 
@@ -19,6 +19,18 @@ export class CharityComponent implements OnInit {
   }
 
   goToDetailsPage() {
-    this.router.navigate(['/charities/' + this.charity.id]);
+    if (this.router.url === '/charities') {
+      this.router.navigate(['/charities/' + this.charity.id], {
+        queryParams: {
+          toHomePage: 'homePage'
+        }
+      });
+    } else {
+      this.router.navigate(['/charities/' + this.charity.id], {
+        queryParams: {
+          toProfilePage: 'profilePage'
+        }
+      });
+    }
   }
 }

@@ -9,7 +9,7 @@
 <div *ngIf="charity">
   <div class="clr-row">
     <div class="clr-col-2">
-      <button routerLink="/charities">Back</button>
+      <button (click)="backDecision()">Back</button>
     </div>
   </div>
   <div class="clr-row">
@@ -42,12 +42,16 @@
           <button class="btn btn-warning" (click)="deleteModalIsOpen = true">Delete charity</button>
         </div>
         <div *ngIf="auth.isAuth && !charityOwnCurrentCustomer">
-          <button *ngIf="this.charity.donationRequired" class="btn btn-primary" (click)="donateModalIsOpen = true">Donate</button>
+          <button *ngIf="this.charity.donationRequired" class="btn btn-primary" (click)="donateModalIsOpen = true">
+            Donate
+          </button>
           <button *ngIf="!checkIfVolunteer && this.charity.participantsRequired" class="btn btn-primary"
                   (click)="volunteerModalIsOpen = true">Volunteer
           </button>
           <p *ngIf="checkIfVolunteer">You are already a volunteer of this charity.</p>
         </div>
+        <p *ngIf="this.charity.donationRequired && amountOfDonate && !charityOwnCurrentCustomer">Recommended donation
+          amount: <strong>{{this.amountOfDonate}}</strong></p>
       </div>
     </div>
   </div>

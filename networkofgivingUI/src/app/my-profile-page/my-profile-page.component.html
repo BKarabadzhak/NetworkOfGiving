@@ -1,0 +1,138 @@
+<div *ngIf="profileInfo">
+  <div class="clr-row">
+    <div class="clr-col-lg-3 clr-col-md-3 clr-col-sm-3 clr-col-3">
+      <div class="card">
+        <div class="card-header">
+          My profile
+        </div>
+        <div class="card-block">
+          <div class="card-text">
+            <span>Username: {{profileInfo.username}}<br></span>
+            <span>Name: {{profileInfo.name}}<br></span>
+            <span *ngIf="profileInfo.age">Age: {{profileInfo.age}}<br></span>
+            <span *ngIf="profileInfo.gender">Gender: {{profileInfo.gender}}<br></span>
+            <span *ngIf="profileInfo.location">Location: {{profileInfo.location}}<br></span>
+            <span>Balance: {{profileInfo.balance}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <clr-tabs>
+    <clr-tab>
+      <button clrTabLink>All charities</button>
+      <ng-template [(clrIfActive)]="ownedActive">
+        <clr-tab-content>
+          <div *ngIf="this.charitiesOwned; else msg">
+            <div class="clr-row">
+              <app-charity class="clr-col-sm-3 clr-col-md-3 clr-col-lg-3 clr-col-xl-3"
+                           *ngFor="let charity of charitiesOwned"
+                           [charity]="charity"
+              ></app-charity>
+            </div>
+          </div>
+          <ng-template #msg>No own charities</ng-template>
+        </clr-tab-content>
+      </ng-template>
+    </clr-tab>
+
+    <clr-tab>
+      <button clrTabLink>Donates</button>
+      <ng-template [(clrIfActive)]="donatesActive">
+        <clr-tab-content>
+          <div *ngIf="this.charitiesDonates; else msg">
+            <div class="clr-row">
+              <app-charity class="clr-col-sm-3 clr-col-md-3 clr-col-lg-3 clr-col-xl-3"
+                           *ngFor="let charity of charitiesDonates"
+                           [charity]="charity"
+              ></app-charity>
+            </div>
+          </div>
+          <ng-template #msg>No donations</ng-template>
+        </clr-tab-content>
+      </ng-template>
+    </clr-tab>
+
+    <clr-tab>
+      <button clrTabLink>Volunteers</button>
+      <ng-template [(clrIfActive)]="volunteerActive">
+        <clr-tab-content>
+          <div *ngIf="this.charitiesVolunteer; else msg">
+            <div class="clr-row">
+              <app-charity class="clr-col-sm-3 clr-col-md-3 clr-col-lg-3 clr-col-xl-3"
+                           *ngFor="let charity of charitiesVolunteer"
+                           [charity]="charity"
+              ></app-charity>
+            </div>
+          </div>
+          <ng-template #msg>No volunteering</ng-template>
+        </clr-tab-content>
+      </ng-template>
+    </clr-tab>
+
+    <clr-tab>
+      <a clrTabLink [routerLink]="['/profile', 'activities']">Activities</a>
+      <ng-template [(clrIfActive)]="activitiesActive">
+        <clr-tab-content>
+          <div *ngIf="this.transactions; else msg">
+            <div class="clr-row">
+              <div class="clr-col-lg-6 clr-col-md-9 clr-col-12">
+                <div class="card">
+                  <div class="card-block">
+                    <div class="card-title">
+                      <router-outlet>
+                        <app-activity
+                          *ngFor="let transaction of this.transactions"
+                          [transaction]=transaction
+                        ></app-activity>
+                      </router-outlet>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-template #msg>No activities</ng-template>
+        </clr-tab-content>
+      </ng-template>
+    </clr-tab>
+
+    <clr-tab>
+      <button clrTabLink>In process</button>
+      <ng-template [(clrIfActive)]="inProcessActive">
+        <clr-tab-content>
+          <div *ngIf="this.charitiesInProcess; else msg">
+            <div class="clr-row">
+              <app-charity class="clr-col-sm-3 clr-col-md-3 clr-col-lg-3 clr-col-xl-3"
+                           *ngFor="let charity of charitiesInProcess"
+                           [charity]="charity"
+              ></app-charity>
+            </div>
+          </div>
+          <ng-template #msg>No charities in process</ng-template>
+        </clr-tab-content>
+      </ng-template>
+    </clr-tab>
+
+    <clr-tab>
+      <button clrTabLink>Completed</button>
+      <ng-template [(clrIfActive)]="completedActive">
+        <clr-tab-content>
+          <div *ngIf="this.charitiesCompleted; else msg">
+            <div class="clr-row">
+              <app-charity class="clr-col-sm-3 clr-col-md-3 clr-col-lg-3 clr-col-xl-3"
+                           *ngFor="let charity of charitiesCompleted"
+                           [charity]="charity"
+              ></app-charity>
+            </div>
+          </div>
+          <ng-template #msg>No completed charities</ng-template>
+        </clr-tab-content>
+      </ng-template>
+    </clr-tab>
+
+  </clr-tabs>
+</div>
