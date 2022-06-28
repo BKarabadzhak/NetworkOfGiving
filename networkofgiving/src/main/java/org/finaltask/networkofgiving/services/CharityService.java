@@ -36,7 +36,7 @@ public class CharityService implements ICharityService {
     private MapperManager mapperManager;
     private IFileService fileService;
     private final JdbcTemplate jdbcTemplate;
-    private String imageUrl = "http://localhost:8080/api/charities/images/";
+    private String imageUrl = "http://54.174.196.3:8080/api/charities/images/";
 
     @Autowired
     public CharityService(IDataService dataService, MapperManager mapperManager, IFileService fileService, JdbcTemplate jdbcTemplate) {

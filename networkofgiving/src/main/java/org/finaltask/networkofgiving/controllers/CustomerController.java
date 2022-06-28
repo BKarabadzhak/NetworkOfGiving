@@ -17,7 +17,7 @@ import java.util.List;
 //Accept: application/json
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping(value = "api/user", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CustomerController {
 
     private ICustomerService customerService;
